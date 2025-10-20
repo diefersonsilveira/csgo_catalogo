@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="10dp">
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="@drawable/bg_bottomsheet_handle"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filtros"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingBottom="8dp"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:dividerInsetStart="16dp"
+        app:dividerInsetEnd="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raridade"
+                android:textStyle="bold"
+                android:paddingBottom="6dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgRarity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="false"
+                app:selectionRequired="false"
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="8dp"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:dividerInsetStart="0dp"
+                app:dividerInsetEnd="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoria de arma"
+                android:textStyle="bold"
+                android:paddingBottom="6dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="false"
+                app:selectionRequired="false"
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="8dp"/>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:dividerInsetStart="0dp"
+                app:dividerInsetEnd="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wear"
+                android:textStyle="bold"
+                android:paddingBottom="6dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgWear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="false"
+                app:selectionRequired="false"
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="20dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Aplicar"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClear"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Limpar"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

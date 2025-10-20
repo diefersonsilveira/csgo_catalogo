@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CSGO Catalog</string>
+    <string name="tab_skins">Skins</string>
+    <string name="tab_stickers">Stickers</string>
+    <string name="hint_search_skins">Buscar skins por nome…</string>
+    <string name="hint_search_stickers">Buscar stickers por nome…</string>
+    <string name="loading">Carregando…</string>
+    <string name="error_generic">Ocorreu um erro. Tente novamente.</string>
+    <string name="empty_list">Nada encontrado.</string>
+    <string name="label_weapon">Arma:</string>
+    <string name="label_rarity">Raridade:</string>
+    <string name="label_event">Evento:</string>
+    <string name="label_team">Time:</string>
+    <string name="label_type">Tipo:</string>
+    <string name="label_description">Descrição</string>
+</resources>
