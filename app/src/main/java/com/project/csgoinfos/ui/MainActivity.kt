@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.navigation.NavigationBarView
 import com.project.csgoinfos.R
 import com.project.csgoinfos.ui.skins.SkinsFragment
 import com.project.csgoinfos.ui.stickers.StickersFragment
@@ -20,16 +19,22 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
-        val tabs = findViewById<TabLayout>(R.id.tabs)
+        val bottom = findViewById<NavigationBarView>(R.id.bottomBar)
 
         viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
-            override fun createFragment(position: Int) =
-                if (position == 0) SkinsFragment() else StickersFragment()
+            override fun createFragment(position: Int) = if (position == 0) SkinsFragment() else StickersFragment()
         }
 
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
-            tab.text = if (position == 0) getString(R.string.tab_skins) else getString(R.string.tab_stickers)
-        }.attach()
+        bottom.setOnItemSelectedListener {
+            viewPager.currentItem = if (it.itemId == R.id.nav_skins) 0 else 1
+            true
+        }
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                bottom.selectedItemId = if (position == 0) R.id.nav_skins else R.id.nav_stickers
+            }
+        })
+        bottom.selectedItemId = R.id.nav_skins
     }
 }

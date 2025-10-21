@@ -1,4 +1,4 @@
-package com.project.csgoinfos.ui.skins
+﻿package com.project.csgoinfos.ui.skins
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -17,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -48,7 +51,7 @@ class SkinsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = SkinAdapter { skin -> openDetails(skin) }
+        adapter = SkinAdapter({ skin -> openDetails(skin) }, { skin -> showSkinInfo(skin) })
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
@@ -169,6 +172,24 @@ class SkinsFragment : Fragment() {
             bar.addView(chip)
         }
         scroll.isVisible = true
+    }
+
+    private fun showSkinInfo(skin: Skin) {
+        val dlg = BottomSheetDialog(requireContext())
+        val v = layoutInflater.inflate(R.layout.bottomsheet_info_skin, null)
+        v.findViewById<ImageView>(R.id.image).load(skin.image)
+        v.findViewById<TextView>(R.id.title).text = skin.name
+        val chip = v.findViewById<com.google.android.material.chip.Chip>(R.id.badge)
+        chip.text = skin.rarity?.name ?: ""
+        val color = skin.rarity?.color?.let { runCatching { android.graphics.Color.parseColor(it) }.getOrNull() }
+            ?: requireContext().getColor(R.color.brand_primary)
+        chip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(color)
+        chip.setTextColor(if (androidx.core.graphics.ColorUtils.calculateLuminance(color) < 0.5) android.graphics.Color.WHITE else android.graphics.Color.BLACK)
+        v.findViewById<TextView>(R.id.desc).text = skin.description ?: ""
+        v.findViewById<View>(R.id.btnDetails).setOnClickListener { openDetails(skin); dlg.dismiss() }
+        v.findViewById<View>(R.id.btnClose).setOnClickListener { dlg.dismiss() }
+        dlg.setContentView(v)
+        dlg.show()
     }
 
     private fun openDetails(skin: Skin) {

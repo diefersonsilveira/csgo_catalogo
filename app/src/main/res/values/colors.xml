@@ -1,15 +1,16 @@
 <resources>
-    <color name="brand_primary">#D32F2F</color>
-    <color name="brand_on_primary">#FFFFFF</color>
-    <color name="brand_primary_container">#FFCDD2</color>
-    <color name="brand_on_primary_container">#2B0002</color>
-    <color name="brand_secondary">#B71C1C</color>
-    <color name="brand_on_secondary">#FFFFFF</color>
-    <color name="brand_secondary_container">#FFEBEE</color>
-    <color name="brand_on_secondary_container">#2B0002</color>
-    <color name="brand_surface">#FFFBFF</color>
-    <color name="brand_on_surface">#1C1B1F</color>
-    <color name="brand_surface_variant">#E7E0EC</color>
-    <color name="brand_on_surface_variant">#49454F</color>
-    <color name="brand_outline">#79747E</color>
+    <color name="brand_primary">#22D073</color>
+    <color name="brand_on_primary">#0A1510</color>
+    <color name="brand_primary_container">#103528</color>
+    <color name="brand_on_primary_container">#B7FFD8</color>
+    <color name="brand_secondary">#FFD335</color>
+    <color name="brand_on_secondary">#1A1600</color>
+    <color name="brand_surface">#1F242B</color>
+    <color name="brand_on_surface">#EDEFF2</color>
+    <color name="brand_surface_variant">#2B323B</color>
+    <color name="brand_on_surface_variant">#AAB0B7</color>
+    <color name="brand_outline">#3A4047</color>
+    <color name="brand_inverse_surface">#0F1317</color>
+    <color name="brand_inverse_on_surface">#D5D9DE</color>
+    <color name="bottom_nav_indicator">#2622D073</color>
 </resources>

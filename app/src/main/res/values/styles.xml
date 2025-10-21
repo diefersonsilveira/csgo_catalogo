@@ -1,0 +1,43 @@
+<resources>
+    <style name="Widget.CSGO.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="titleCentered">true</item>
+    </style>
+
+    <style name="Widget.CSGO.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.ExtraLarge</item>
+        <item name="strokeColor">?attr/colorOutline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.CSGO.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">12dp</item>
+    </style>
+
+    <style name="Widget.CSGO.RarityChip" parent="Widget.Material3.Chip.Assist">
+        <item name="chipMinHeight">28dp</item>
+        <item name="chipCornerRadius">16dp</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipEndPadding">12dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="chipStrokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.CSGO.BottomBar" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/brand_inverse_surface</item>
+        <item name="itemIconTint">@color/bottom_nav_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.CSGO.BottomBar.Indicator</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <style name="Widget.CSGO.BottomBar.Indicator">
+        <item name="android:width">88dp</item>
+        <item name="android:height">32dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.ExtraLarge</item>
+        <item name="android:color">@color/bottom_nav_indicator</item>
+    </style>
+
+    <style name="Widget.CSGO.SearchBar" parent="Widget.Material3.SearchBar" />
+    <style name="Widget.CSGO.SearchView" parent="Widget.Material3.SearchView" />
+</resources>
