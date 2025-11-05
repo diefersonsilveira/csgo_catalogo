@@ -2,8 +2,12 @@
     <string name="app_name">CSGO Catalog</string>
     <string name="tab_skins">Skins</string>
     <string name="tab_stickers">Stickers</string>
+    <string name="tab_highlights">Highlights</string>
+    <string name="tab_crates">Crates</string>
     <string name="hint_search_skins">Buscar skins por nome…</string>
     <string name="hint_search_stickers">Buscar stickers por nome…</string>
+    <string name="hint_search_highlights">Buscar highlights, jogadores…</string>
+    <string name="hint_search_crates">Buscar crates por nome…</string>
     <string name="loading">Carregando…</string>
     <string name="error_generic">Ocorreu um erro. Tente novamente.</string>
     <string name="empty_list">Nada encontrado.</string>

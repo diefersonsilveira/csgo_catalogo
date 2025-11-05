@@ -11,11 +11,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.graphics.toColorInt
+import androidx.core.view.MenuProvider
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +26,6 @@ import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.search.SearchBar
-import com.google.android.material.search.SearchView
 import com.project.csgoinfos.R
 import com.project.csgoinfos.databinding.FragmentListBinding
 import com.project.csgoinfos.model.Sticker
@@ -40,70 +41,59 @@ class StickersFragment : Fragment() {
     private lateinit var adapter: StickerAdapter
     private var searchJob: Job? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_list, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.itemId == R.id.action_filter) {
+                    showFiltersBottomSheet()
+                    return true
+                }
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         adapter = StickerAdapter({ s -> openDetails(s) }, { s -> showStickerInfo(s) })
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         binding.swipeRefresh.setOnRefreshListener { vm.load() }
 
-        val searchBar: SearchBar = binding.searchBar
-        val searchView: SearchView = binding.searchView
-        searchBar.hint = getString(R.string.hint_search_stickers)
-        searchView.setupWithSearchBar(searchBar)
-        searchView.editText.setText(vm.currentFilters.query ?: "")
-        searchBar.setText(vm.currentFilters.query ?: "")
-        searchBar.setOnClickListener { searchView.show() }
-        searchView.editText.doOnTextChanged { text, _, _, _ ->
+        binding.searchInputLayout.hint = getString(R.string.hint_search_stickers)
+        binding.searchEditText.setText(vm.currentFilters.query ?: "")
+        binding.searchEditText.doOnTextChanged { text, _, _, _ ->
             val q = text?.toString()
-            searchBar.setText(q)
             searchJob?.cancel()
             searchJob = viewLifecycleOwner.lifecycleScope.launch {
                 delay(250)
                 vm.applyFilters(vm.currentFilters.copy(query = q))
             }
         }
-        searchView.editText.setOnEditorActionListener { _, _, _ ->
-            searchView.hide()
-            true
-        }
 
         vm.filtered.observe(viewLifecycleOwner) { list ->
-            adapter.submit(list)
+            adapter.submitList(list)
             binding.empty.isVisible = list.isEmpty()
         }
         vm.loading.observe(viewLifecycleOwner) { binding.swipeRefresh.isRefreshing = it }
         vm.error.observe(viewLifecycleOwner) { it?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() } }
+
         vm.load()
         renderFilterChips()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_list, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.action_filter) {
-            showFiltersBottomSheet()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun showFiltersBottomSheet() {
         val dlg = BottomSheetDialog(requireContext())
-        val v = layoutInflater.inflate(R.layout.bottomsheet_filters_stickers, null)
+        val v = layoutInflater.inflate(R.layout.bottomsheet_filters_stickers, binding.root as? ViewGroup, false)
         dlg.setContentView(v)
         val cgRarity = v.findViewById<ChipGroup>(R.id.cgRarity)
         val cgType = v.findViewById<ChipGroup>(R.id.cgType)
@@ -176,12 +166,12 @@ class StickersFragment : Fragment() {
 
     private fun showStickerInfo(s: Sticker) {
         val dlg = BottomSheetDialog(requireContext())
-        val v = layoutInflater.inflate(R.layout.bottomsheet_info_sticker, null)
+        val v = layoutInflater.inflate(R.layout.bottomsheet_info_sticker, binding.root as? ViewGroup, false)
         v.findViewById<ImageView>(R.id.image).load(s.image)
         v.findViewById<TextView>(R.id.title).text = s.name
-        val chip = v.findViewById<com.google.android.material.chip.Chip>(R.id.badge)
+        val chip = v.findViewById<Chip>(R.id.badge)
         chip.text = s.rarity?.name ?: ""
-        val color = s.rarity?.color?.let { runCatching { android.graphics.Color.parseColor(it) }.getOrNull() }
+        val color = s.rarity?.color?.let { runCatching { it.toColorInt() }.getOrNull() }
             ?: requireContext().getColor(R.color.brand_primary)
         chip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(color)
         chip.setTextColor(if (androidx.core.graphics.ColorUtils.calculateLuminance(color) < 0.5) android.graphics.Color.WHITE else android.graphics.Color.BLACK)

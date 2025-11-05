@@ -1,69 +1,59 @@
 package com.project.csgoinfos.ui.stickers
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.ColorUtils
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.graphics.toColorInt
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.chip.Chip
 import com.project.csgoinfos.R
-import com.project.csgoinfos.databinding.ItemCardBinding
 import com.project.csgoinfos.model.Sticker
 
 class StickerAdapter(
-    private val onClick: (Sticker) -> Unit,
-    private val onInfo: (Sticker) -> Unit
-) : RecyclerView.Adapter<StickerAdapter.VH>() {
-    private val items = mutableListOf<Sticker>()
+    private val onStickerClick: (Sticker) -> Unit,
+    private val onStickerLongClick: (Sticker) -> Unit
+) : ListAdapter<Sticker, StickerAdapter.StickerViewHolder>(StickerDiffCallback) {
 
-    fun submit(list: List<Sticker>) {
-        items.clear()
-        items.addAll(list)
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StickerViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sticker, parent, false)
+        return StickerViewHolder(view)
     }
 
-    inner class VH(val b: ItemCardBinding) : RecyclerView.ViewHolder(b.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val b = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VH(b)
+    override fun onBindViewHolder(holder: StickerViewHolder, position: Int) {
+        val sticker = getItem(position)
+        holder.bind(sticker)
+        holder.itemView.setOnClickListener { onStickerClick(sticker) }
+        holder.itemView.setOnLongClickListener { onStickerLongClick(sticker); true }
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
-        val item = items[position]
-        holder.b.title.text = item.name
-        holder.b.subtitle.visibility = View.GONE
-        holder.b.image.load(item.image)
+    class StickerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val image: ImageView = view.findViewById(R.id.image)
+        private val title: TextView = view.findViewById(R.id.title)
+        private val badge: Chip = view.findViewById(R.id.badge)
 
-        val colorHex = item.rarity?.color
-        val accent = try {
-            if (colorHex.isNullOrBlank()) null else Color.parseColor(colorHex)
-        } catch (_: Exception) {
-            null
-        } ?: holder.b.root.context.getColor(R.color.brand_primary)
-
-        holder.b.accent.backgroundTintList = ColorStateList.valueOf(accent)
-        holder.b.thumb.backgroundTintList = ColorStateList.valueOf(ColorUtils.setAlphaComponent(accent, 32))
-
-        val name = item.rarity?.name
-        if (!name.isNullOrBlank()) {
-            val bg = accent
-            val stroke = ColorUtils.blendARGB(accent, Color.BLACK, 0.2f)
-            val text = if (ColorUtils.calculateLuminance(bg) < 0.5) android.graphics.Color.WHITE else android.graphics.Color.BLACK
-            holder.b.badge.text = name
-            holder.b.badge.chipBackgroundColor = ColorStateList.valueOf(bg)
-            holder.b.badge.chipStrokeColor = ColorStateList.valueOf(stroke)
-            holder.b.badge.setTextColor(text)
-            holder.b.badge.visibility = View.VISIBLE
-        } else {
-            holder.b.badge.visibility = View.GONE
+        fun bind(sticker: Sticker) {
+            image.load(sticker.image) { crossfade(true) }
+            title.text = sticker.name
+            badge.text = sticker.rarity?.name
+            val color = sticker.rarity?.color?.let { runCatching { it.toColorInt() }.getOrNull() }
+                ?: itemView.context.getColor(R.color.brand_primary)
+            badge.chipBackgroundColor = android.content.res.ColorStateList.valueOf(color)
+            badge.setTextColor(if (androidx.core.graphics.ColorUtils.calculateLuminance(color) < 0.5) android.graphics.Color.WHITE else android.graphics.Color.BLACK)
         }
+    }
+}
 
-        holder.b.root.setOnClickListener { onClick(item) }
-        holder.b.btnInfo.setOnClickListener { onInfo(item) }
+object StickerDiffCallback : DiffUtil.ItemCallback<Sticker>() {
+    override fun areItemsTheSame(oldItem: Sticker, newItem: Sticker): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getItemCount() = items.size
+    override fun areContentsTheSame(oldItem: Sticker, newItem: Sticker): Boolean {
+        return oldItem == newItem
+    }
 }

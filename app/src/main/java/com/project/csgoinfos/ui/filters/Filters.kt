@@ -13,3 +13,16 @@ data class StickerFilters(
     val types: Set<String> = emptySet(),
     val events: Set<String> = emptySet()
 )
+
+data class HighlightFilters(
+    val query: String? = null,
+    val players: Set<String> = emptySet(),
+    val teams: Set<String> = emptySet(),
+    val events: Set<String> = emptySet(),
+    val maps: Set<String> = emptySet()
+)
+
+data class CrateFilters(
+    val query: String? = null,
+    val rarities: Set<String> = emptySet()
+)
