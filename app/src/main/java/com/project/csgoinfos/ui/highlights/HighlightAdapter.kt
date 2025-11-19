@@ -36,8 +36,10 @@ class HighlightAdapter(private val onClick: (Highlight) -> Unit) : ListAdapter<H
         private val title: TextView = itemView.findViewById(R.id.title)
         private val subtitle: TextView = itemView.findViewById(R.id.subtitle)
         private val btnInfo: ImageButton = itemView.findViewById(R.id.btnInfo)
+        private val badge: View = itemView.findViewById(R.id.badge)
 
         fun bind(item: Highlight, onClick: (Highlight) -> Unit) {
+            badge.visibility = View.GONE
             title.text = item.title ?: (item.player ?: "Highlight")
             val mapName = item.map?.let { Map.getMapName(it) }
             subtitle.visibility = View.VISIBLE

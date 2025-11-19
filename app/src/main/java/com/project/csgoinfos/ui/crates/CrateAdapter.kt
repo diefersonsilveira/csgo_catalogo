@@ -37,8 +37,9 @@ class CrateAdapter : ListAdapter<Crate, CrateAdapter.VH>(DIFF) {
         private val title: TextView = itemView.findViewById(R.id.title)
         private val subtitle: TextView = itemView.findViewById(R.id.subtitle)
         private val btnInfo: ImageButton = itemView.findViewById(R.id.btnInfo)
-
+        private val badge: View = itemView.findViewById(R.id.badge)
         fun bind(item: Crate) {
+            badge.visibility = View.GONE
             title.text = item.name ?: "Crate"
             subtitle.visibility = View.VISIBLE
             subtitle.text = item.rarity?.name ?: ""
