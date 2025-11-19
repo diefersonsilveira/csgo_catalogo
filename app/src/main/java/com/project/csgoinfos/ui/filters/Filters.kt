@@ -26,3 +26,8 @@ data class CrateFilters(
     val query: String? = null,
     val rarities: Set<String> = emptySet()
 )
+data class AgentFilters(
+    val query: String? = null,
+    val rarities: Set<String> = emptySet(),
+    val teams: Set<String> = emptySet()
+)

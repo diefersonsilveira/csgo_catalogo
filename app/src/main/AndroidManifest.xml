@@ -23,5 +23,11 @@
         <activity
             android:name="com.project.csgoinfos.ui.highlights.HighlightDetailActivity"
             android:exported="false" />
+        <activity
+            android:name="com.project.csgoinfos.ui.crates.CrateDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.project.csgoinfos.ui.agents.AgentDetailActivity"
+            android:exported="false" />
     </application>
 </manifest>

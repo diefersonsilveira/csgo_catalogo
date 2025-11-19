@@ -16,4 +16,8 @@
         android:id="@+id/nav_crates"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="@string/tab_crates" />
+    <item
+        android:id="@+id/nav_agents"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="@string/tab_agents" />
 </menu>

@@ -4,6 +4,7 @@ import com.project.csgoinfos.model.Skin
 import com.project.csgoinfos.model.Sticker
 import com.project.csgoinfos.model.Highlight
 import com.project.csgoinfos.model.Crate
+import com.project.csgoinfos.model.Agent
 import retrofit2.http.GET
 
 interface CSGOApi {
@@ -15,4 +16,6 @@ interface CSGOApi {
     suspend fun getHighlights(): List<Highlight>
     @GET("crates.json")
     suspend fun getCrates(): List<Crate>
+    @GET("agents.json")
+    suspend fun getAgents(): List<Agent>
 }

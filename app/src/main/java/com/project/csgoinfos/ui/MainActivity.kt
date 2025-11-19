@@ -11,6 +11,7 @@ import com.project.csgoinfos.ui.skins.SkinsFragment
 import com.project.csgoinfos.ui.stickers.StickersFragment
 import com.project.csgoinfos.ui.highlights.HighlightsFragment
 import com.project.csgoinfos.ui.crates.CratesFragment
+import com.project.csgoinfos.ui.agents.AgentsFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +25,13 @@ class MainActivity : AppCompatActivity() {
         val bottom = findViewById<NavigationBarView>(R.id.bottomBar)
 
         viewPager.adapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount() = 4
+            override fun getItemCount() = 5
             override fun createFragment(position: Int) = when (position) {
                 0 -> SkinsFragment()
                 1 -> StickersFragment()
                 2 -> HighlightsFragment()
-                else -> CratesFragment()
+                3 -> CratesFragment()
+                else -> AgentsFragment()
             }
         }
 
@@ -38,7 +40,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_skins -> 0
                 R.id.nav_stickers -> 1
                 R.id.nav_highlights -> 2
-                else -> 3
+                R.id.nav_crates -> 3
+                else -> 4
             }
             true
         }
@@ -48,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                     0 -> R.id.nav_skins
                     1 -> R.id.nav_stickers
                     2 -> R.id.nav_highlights
-                    else -> R.id.nav_crates
+                    3 -> R.id.nav_crates
+                    else -> R.id.nav_agents
                 }
             }
         })

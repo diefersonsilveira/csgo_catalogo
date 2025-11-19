@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.project.csgoinfos.R
+import android.content.Intent
 import com.project.csgoinfos.model.Crate
+import com.project.csgoinfos.ui.crates.CrateDetailActivity
 
 class CrateAdapter : ListAdapter<Crate, CrateAdapter.VH>(DIFF) {
     companion object {
@@ -41,7 +43,18 @@ class CrateAdapter : ListAdapter<Crate, CrateAdapter.VH>(DIFF) {
             subtitle.visibility = View.VISIBLE
             subtitle.text = item.rarity?.name ?: ""
             image.load(item.image)
-            btnInfo.visibility = View.GONE
+            btnInfo.visibility = View.VISIBLE
+
+            btnInfo.setOnClickListener {
+                val intent = Intent(itemView.context, CrateDetailActivity::class.java).apply {
+                    putExtra("name", item.name)
+                    putExtra("desc", item.description)
+                    putExtra("image", item.image)
+                    putExtra("rarity", item.rarity?.name)
+                    putExtra("rarityColor", item.rarity?.color)
+                }
+                itemView.context.startActivity(intent)
+            }
         }
     }
 }
