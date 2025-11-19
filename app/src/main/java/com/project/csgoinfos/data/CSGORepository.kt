@@ -21,3 +21,4 @@ class CSGORepository {
     suspend fun fetchCrates(): List<Crate> = tryPtBrThenEn { it.getCrates() }
     suspend fun fetchAgents(): List<Agent> = tryPtBrThenEn { it.getAgents() }
 }
+

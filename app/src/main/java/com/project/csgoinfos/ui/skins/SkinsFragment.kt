@@ -1,4 +1,4 @@
-﻿package com.project.csgoinfos.ui.skins
+package com.project.csgoinfos.ui.skins
 
 import android.content.Intent
 import android.os.Bundle

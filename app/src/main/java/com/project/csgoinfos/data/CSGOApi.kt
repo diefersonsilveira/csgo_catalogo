@@ -19,3 +19,4 @@ interface CSGOApi {
     @GET("agents.json")
     suspend fun getAgents(): List<Agent>
 }
+

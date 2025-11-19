@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">CSGO Catalog</string>
+    <string name="tab_home">Home</string>
     <string name="tab_skins">Skins</string>
     <string name="tab_stickers">Stickers</string>
     <string name="tab_highlights">Highlights</string>
     <string name="tab_crates">Crates</string>
     <string name="tab_agents">Agents</string>
+    <string name="home_welcome">Bem-vindo ao CSGO Catalog</string>
+    <string name="home_subtitle">Explore skins, stickers, highlights e muito mais</string>
     <string name="hint_search_skins">Buscar skins por nome…</string>
     <string name="hint_search_stickers">Buscar stickers por nome…</string>
     <string name="hint_search_highlights">Buscar highlights, jogadores…</string>

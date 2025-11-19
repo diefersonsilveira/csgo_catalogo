@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_skins"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_view_24"
         android:title="@string/tab_skins" />
     <item
         android:id="@+id/nav_stickers"
-        android:icon="@android:drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_gallery_24"
         android:title="@string/tab_stickers" />
     <item
         android:id="@+id/nav_highlights"
-        android:icon="@android:drawable/ic_media_play"
+        android:icon="@drawable/ic_play_24"
         android:title="@string/tab_highlights" />
     <item
         android:id="@+id/nav_crates"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_agenda_24"
         android:title="@string/tab_crates" />
     <item
         android:id="@+id/nav_agents"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/ic_person_24"
         android:title="@string/tab_agents" />
 </menu>
